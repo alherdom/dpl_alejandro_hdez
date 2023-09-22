@@ -48,17 +48,23 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 10. user1 y user2 tendrán una pequeña conversación en la página del PR, donde cada usuario incluirá, al menos, un cambio más.
 11. user1 finalmente aprobará el PR, cerrará la issue creada (usando una referencia a la misma) y actualizará la rama principal en su copia local.
 12. user2 deberá incorporar los cambios de la rama principal de upstream en su propia rama principal.
-user1 creará una issue con el título "Improve UX with cool colors".
+13. user1 creará una issue con el título "Improve UX with cool colors".
 14. user1 cambiará la línea 10 de cover.css a:
 color: purple;
 1. user1 hará simplemente un commit local en main → NO HACER git push.
 2. user2 creará una nueva rama cool-colors y cambiará la línea 10 de cover.css a:
+
+´´´´
 color: darkgreen;
+´´´´
+
 1. user2 enviará un PR a user1.
 2. user1 probará el PR de user2 (en su copia local). A continuación tratará de mergear el contenido de la rama cool-colors en su rama principal y tendrá que gestionar el conflicto: Dejar el contenido que viene de user2.
 3. Después del commit para arreglar el conflicto, user1 modificará la línea 11 de cover.css a:
 
-´´´´text-shadow: 2px 2px 8px lightgreen;´´´´
+´´´´
+text-shadow: 2px 2px 8px lightgreen;
+´´´´
 
 1. user1 hará un commit especificando en el mensaje de commit el cambio hecho (sombra) y que se cierra la issue creada (usar referencia a la issue). A continuación subirá los cambios a origin/main.
 
