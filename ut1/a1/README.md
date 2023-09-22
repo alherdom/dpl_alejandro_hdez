@@ -1,10 +1,10 @@
 
-<center>
+<div align="center">
 
 # Documentación y sistema de control de versiones
 
 
-</center>
+</div>
 
 <div align="justify">
 
