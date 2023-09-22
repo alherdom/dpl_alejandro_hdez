@@ -6,6 +6,8 @@
 
 </center>
 
+<div align="justify">
+
 ***Alejandro Hdez:***
 ***Curso:*** 2º de Ciclo Superior de Desarrollo de Aplicaciones Web.
 
@@ -75,3 +77,5 @@ Si encontramos dificultades a la hora de realizar algún paso debemos explicar e
 #### ***Conclusiones***. <a name="id5"></a>
 
 En esta parte debemos exponer las conclusiones que sacamos del desarrollo de la prácica
+
+</div>
