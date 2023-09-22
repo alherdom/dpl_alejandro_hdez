@@ -2,14 +2,12 @@
 <div align="center">
 
 # Documentación y sistema de control de versiones
-
+***Alejandro Hdez:***
+***Curso:*** 2º de Ciclo Superior de Desarrollo de Aplicaciones Web.
 
 </div>
 
 <div align="justify">
-
-***Alejandro Hdez:***
-***Curso:*** 2º de Ciclo Superior de Desarrollo de Aplicaciones Web.
 
 ### ÍNDICE
 
