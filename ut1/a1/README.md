@@ -54,17 +54,17 @@ color: purple;
 1. user1 hará simplemente un commit local en main → NO HACER git push.
 2. user2 creará una nueva rama cool-colors y cambiará la línea 10 de cover.css a:
 
-´´´´
+````
 color: darkgreen;
-´´´´
+````
 
 1. user2 enviará un PR a user1.
 2. user1 probará el PR de user2 (en su copia local). A continuación tratará de mergear el contenido de la rama cool-colors en su rama principal y tendrá que gestionar el conflicto: Dejar el contenido que viene de user2.
 3. Después del commit para arreglar el conflicto, user1 modificará la línea 11 de cover.css a:
 
-´´´´
+````
 text-shadow: 2px 2px 8px lightgreen;
-´´´´
+````
 
 1. user1 hará un commit especificando en el mensaje de commit el cambio hecho (sombra) y que se cierra la issue creada (usar referencia a la issue). A continuación subirá los cambios a origin/main.
 
