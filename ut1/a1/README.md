@@ -57,7 +57,45 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 </div>
 
 4. user2 creará un fork de git-work desde su cuenta de GitHub.
+- Se realiza un fork por medio de la opción que nos brinda el propio Github.
+
+<div align="center">
+
+  <img width=100% src="img/1.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/2.png">
+
+</div>
+
 5. user2 clonará su fork del repo.
+- Una vez "forkeado" el repositorio podrá ser clonado, en nuestro caso, por medio de SSH. Para ello se usará el comando: 
+
+    git clone <url>
+
+<div align="center">
+
+  <img width=100% src="img/3.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/4.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/5.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/6.png">
+
+</div>
+
 6. user1 creará una issue con el título "Add custom text for startup contents".
 - Se crea el issue con el título marcado en la tarea.
 <div align="center">
@@ -67,7 +105,33 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 </div>
 
 7. user2 creará una nueva rama custom-text y modificará el fichero index.html personalizándolo para una supuesta startup.
+- Se crea la rama custom-text. Esto evitará los conflictos entre las nuevas funcionalidades o cambios que estemos realizando y los posibles cambios que podrían surgir en la rama de trabajo prinicpal del proyecto.
+El comando a utilizar es: 
+
+    git branch <nombre-rama>
+    git switch <rama>
+
+<div align="center">
+
+  <img width=100% src="img/7.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/8.png">
+
+</div>
+
 8. user2 enviará un PR a user1.
+- Una vez hecho los cambios en la rama, estos se subiran. Para ello es necesario especificar la rama, ya que esta no se encuentra en el repositorio remoto. Terminado el push, se podrá solicitar un pull request al usuario del cual hemos forkeado el repositorio
+
+<div align="center">
+
+  <img width=100% src="img/9.png">
+
+</div>
+
+
 9. user1 probará el PR de user2 en su máquina (copia local) creando previamente un remoto denominado upstream, y realizará ciertos cambios en su copia local que luego deberá subir al propio PR.
 - Text
   
@@ -121,8 +185,49 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
   <img width=100% src="img/capt9.png">
 
 </div>
+<div align="center">
+
+  <img width=100% src="img/10.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/11.png">
+
+</div>
 
 12. user2 deberá incorporar los cambios de la rama principal de upstream en su propia rama principal.
+- Una vez el user1 (Alejandro) ha terminado los cambios, será necesario bajar estos nuevamente a local y además se vuelve a subir el repositorio con los cambios propios que se han acordado previamente en la conversación del pull request
+
+<div align="center">
+
+  <img width=100% src="img/12.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/13.png">
+
+</div>
+
+- Aceptado el pull request, será necesario tener un enlace con el repositorio remote original para poder añadir los cambios añadidos a la rama main del proyecto original. Para ello se utilizará el comando: 
+
+    git remote add <alias del repositorio remoto> <url>
+
+*El repositorio remoto se debería de llamar upstream, pero por confusión se ha llamado "main"
+
+- Finalizado el enlace se hace un pull de los cambios al repositorio local
+
+<div align="center">
+
+  <img width=100% src="img/14.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/15.png">
+
+</div>
   
 13. user1 creará una issue con el título "Improve UX with cool colors".
 - Se crea nuevamente otro issue con el título marcado en la tarea.
@@ -158,8 +263,22 @@ color: purple;
 ````
 color: darkgreen;
 ````
+- Se crea una rama para cambiar de color el texto de los botones a verde oscuro. Se realiza el mismo proceso que con la rama custom-text
+
+<div align="center">
+
+  <img width=100% src="img/16.png">
+
+</div>
 
 17. user2 enviará un PR a user1.
+- Al igual que en proceso anteriores, una vez subido el cambio se podrá realizar un pull request para la revisión de los cambios por parte del dueño del repositorio original.
+
+<div align="center">
+
+  <img width=100% src="img/17.png">
+
+</div>
 
 18. user1 probará el PR de user2 (en su copia local). A continuación tratará de mergear el contenido de la rama cool-colors en su rama principal y tendrá que gestionar el conflicto: Dejar el contenido que viene de user2.
 
@@ -215,4 +334,6 @@ text-shadow: 2px 2px 8px lightgreen;
 #### ***Conclusiones***. <a name="id5"></a>
 
 - El desconocimiento de los comandos de "Git" y la falta de práctica de trabajo en proyectos por parejas o grupos de trabajo a la vez consideramos que ha sido la mayor dificultad de esta práctica. A su véz, confíamos que con la práctica y manteniendo el trabajo en equipo, adquiramos los conocimientos necesarios para desenvolvernos más fácilmente en este método de trabajo, dado que también lo consideramos el más óptimo, seguro y eficaz para el desarrollo web.
+
+-En cuanto a los sistemas de control de versiones en si mismos, estos  tienen la capacidad de permitir trabajar de una manera segura (debido a los guardados por medio de commits), así como también permite el trabajo en paralelo de diferentes desarrolladores dentro de un mismo proyecto e incluso da la posibilidad de trabajar o poder aportar funcionalidades en proyectos ajenos. Esto sumado al hecho de que (en el caso de Git) es un sistema no distribuido hacen de esta una herramienta muy potente e indispensable en el ámbito del desarrollo.
 </div>
