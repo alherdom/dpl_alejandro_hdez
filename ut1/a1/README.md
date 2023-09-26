@@ -73,7 +73,7 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 5. user2 clonará su fork del repo.
 - Una vez "forkeado" el repositorio podrá ser clonado, en nuestro caso, por medio de SSH. Para ello se usará el comando: 
 
-    git clone <url>
+      git clone <url>
 
 <div align="center">
 
@@ -108,8 +108,8 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 - Se crea la rama custom-text. Esto evitará los conflictos entre las nuevas funcionalidades o cambios que estemos realizando y los posibles cambios que podrían surgir en la rama de trabajo prinicpal del proyecto.
 El comando a utilizar es: 
 
-    git branch <nombre-rama>
-    git switch <rama>
+      git branch <nombre-rama>
+      git switch <rama>
 
 <div align="center">
 
@@ -213,7 +213,7 @@ El comando a utilizar es:
 
 - Aceptado el pull request, será necesario tener un enlace con el repositorio remote original para poder añadir los cambios añadidos a la rama main del proyecto original. Para ello se utilizará el comando: 
 
-    git remote add <alias del repositorio remoto> <url>
+      git remote add <alias del repositorio remoto> <url>
 
 *El repositorio remoto se debería de llamar upstream, pero por confusión se ha llamado "main"
 
@@ -336,5 +336,5 @@ text-shadow: 2px 2px 8px lightgreen;
 
 - El desconocimiento de los comandos de "Git" y la falta de práctica de trabajo en proyectos por parejas o grupos de trabajo a la vez consideramos que ha sido la mayor dificultad de esta práctica. A su véz, confíamos que con la práctica y manteniendo el trabajo en equipo, adquiramos los conocimientos necesarios para desenvolvernos más fácilmente en este método de trabajo, dado que también lo consideramos el más óptimo, seguro y eficaz para el desarrollo web.
 
--En cuanto a los sistemas de control de versiones en si mismos, estos  tienen la capacidad de permitir trabajar de una manera segura (debido a los guardados por medio de commits), así como también permite el trabajo en paralelo de diferentes desarrolladores dentro de un mismo proyecto e incluso da la posibilidad de trabajar o poder aportar funcionalidades en proyectos ajenos. Esto sumado al hecho de que (en el caso de Git) es un sistema no distribuido hacen de esta una herramienta muy potente e indispensable en el ámbito del desarrollo.
+- En cuanto a los sistemas de control de versiones en si mismos, estos  tienen la capacidad de permitir trabajar de una manera segura (debido a los guardados por medio de commits), así como también permite el trabajo en paralelo de diferentes desarrolladores dentro de un mismo proyecto e incluso da la posibilidad de trabajar o poder aportar funcionalidades en proyectos ajenos. Esto sumado al hecho de que (en el caso de Git) es un sistema no distribuido hacen de esta una herramienta muy potente e indispensable en el ámbito del desarrollo.
 </div>
