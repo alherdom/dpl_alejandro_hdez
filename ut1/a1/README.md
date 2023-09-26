@@ -77,18 +77,48 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 
 </div>
 
-10. user1 y user2 tendrán una pequeña conversación en la página del PR, donde cada usuario incluirá, al menos, un cambio más.
+<div align="center">
+
+  <img width=100% src="img/capt6.png">
+
+</div>
 
 <div align="center">
 
-  <img width=100% src="img/capt.png">
+  <img width=100% src="img/capt7.png">
+
+</div>
+
+<div align="center">
+
+  <img width=100% src="img/capt7.2.png">
+
+</div>
+
+10. user1 y user2 tendrán una pequeña conversación en la página del PR, donde cada usuario incluirá, al menos, un cambio más.
+- Se comentan los cambios pertinentes de cada usuario.
+
+<div align="center">
+
+  <img width=100% src="img/capt8.png">
 
 </div>
 
 11. user1 finalmente aprobará el PR, cerrará la issue creada (usando una referencia a la misma) y actualizará la rama principal en su copia local.
+
+- Se cierra el PR habiendo realizado ambos cambios por parte de los dos usuarios.
+
 <div align="center">
 
-  <img width=100% src="img/capt.png">
+  <img width=100% src="img/capt8.png">
+
+</div>
+
+- Se actualiza la rama pirncipal en la copia local del user1.
+
+<div align="center">
+
+  <img width=100% src="img/capt9.png">
 
 </div>
 
