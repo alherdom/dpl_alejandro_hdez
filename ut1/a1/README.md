@@ -133,7 +133,8 @@ El comando a utilizar es:
 
 
 9. user1 probará el PR de user2 en su máquina (copia local) creando previamente un remoto denominado upstream, y realizará ciertos cambios en su copia local que luego deberá subir al propio PR.
-- Text
+- Comprobamos los remotos activos del repositorio, en este caso ya contabamos con que no hubieran dado que se creo el repositorio desde vacío, aún así hacemos uso del comando para practicar.
+- Procedemos a añadir el remoto del compañero, en este caso el user2, y seguidamente iremos añadiendo, comiteando y subiedno a dicho remoto todos los cambios que se pide.
   
 <div align="center">
 
