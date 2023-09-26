@@ -43,7 +43,7 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 
 <div align="center">
 
-  <img width=100% src="img/capt1.png">
+  <img width=70% src="img/capt1.png">
 
 </div>
 
@@ -59,51 +59,55 @@ Por la parte del hardware se hace uso del equipo del aula 109 número 18.
 4. user2 creará un fork de git-work desde su cuenta de GitHub.
 5. user2 clonará su fork del repo.
 6. user1 creará una issue con el título "Add custom text for startup contents".
-   
+- Se crea el issue con el título marcado en la tarea.
 <div align="center">
 
-  <img width=100% src="img/capt3.png">
+  <img width=100% src="img/capt4.png">
 
 </div>
 
 7. user2 creará una nueva rama custom-text y modificará el fichero index.html personalizándolo para una supuesta startup.
 8. user2 enviará un PR a user1.
 9. user1 probará el PR de user2 en su máquina (copia local) creando previamente un remoto denominado upstream, y realizará ciertos cambios en su copia local que luego deberá subir al propio PR.
-<div align="center">
-
-  <img width=100% src="img/capt4.png">
-
-</div>
-10. user1 y user2 tendrán una pequeña conversación en la página del PR, donde cada usuario incluirá, al menos, un cambio más.
+- 
 <div align="center">
 
   <img width=100% src="img/capt5.png">
 
 </div>
+10. user1 y user2 tendrán una pequeña conversación en la página del PR, donde cada usuario incluirá, al menos, un cambio más.
+<div align="center">
+
+  <img width=100% src="img/capt.png">
+
+</div>
 11. user1 finalmente aprobará el PR, cerrará la issue creada (usando una referencia a la misma) y actualizará la rama principal en su copia local.
 <div align="center">
 
-  <img width=100% src="img/capt6.png">
+  <img width=100% src="img/capt.png">
 
 </div>
 12. user2 deberá incorporar los cambios de la rama principal de upstream en su propia rama principal.
 13. user1 creará una issue con el título "Improve UX with cool colors".
+- Se crea nuevamente otro issue con el título marcado en la tarea.
 <div align="center">
 
-  <img width=100% src="img/capt7.png">
+  <img width=100% src="img/capt10.png">
 
 </div>
 14. user1 cambiará la línea 10 de cover.css a:
 color: purple;
+- Se modifica el documento CSS, línea 10, cambio de color a "purple".
 <div align="center">
 
-  <img width=100% src="img/capt8.png">
+  <img width=100% src="img/capt11.png">
 
 </div>
 1. user1 hará simplemente un commit local en main → NO HACER git push.
+- Se añaden y se comitean los cambios de punto anteriores, cambio de color a "purple".
 <div align="center">
 
-  <img width=100% src="img/capt.png">
+  <img width=100% src="img/capt12.png">
 
 </div>
 2. user2 creará una nueva rama cool-colors y cambiará la línea 10 de cover.css a:
@@ -114,32 +118,51 @@ color: darkgreen;
 
 1. user2 enviará un PR a user1.
 2. user1 probará el PR de user2 (en su copia local). A continuación tratará de mergear el contenido de la rama cool-colors en su rama principal y tendrá que gestionar el conflicto: Dejar el contenido que viene de user2.
+- Después de solicitar el PR, se mergean los cambios en conflicto (colores distintos en la linea 10), resolviendo en el editor y manteniendo en este caso y según lo marcado en la tarea, los cambios hechos por el user2. Para ello hemos apuntado al user2 y su rama "cool-colors", cambiado a la rama "main", y mergeado los cambios desde ella hacia la rama "cool-colores", resuelto en el editor el conflicto y ya si mergeado todos los cambios.
+<div align="center">
+
+  <img width=100% src="img/capt13.png">
+
+</div>
 
 <div align="center">
 
-  <img width=100% src="img/capt.png">
+  <img width=100% src="img/capt14.png">
 
 </div>
 
 4. Después del commit para arreglar el conflicto, user1 modificará la línea 11 de cover.css a:
+- Se realiza el commit final para arreglar los conflictos del punto anterior y se modifica la linea 11 el sombreado del texto.
 
 ````
 text-shadow: 2px 2px 8px lightgreen;
 ````
 <div align="center">
 
-  <img width=100% src="img/capt.png">
+  <img width=100% src="img/capt15.png">
 
 </div>
+
 1. user1 hará un commit especificando en el mensaje de commit el cambio hecho (sombra) y que se cierra la issue creada (usar referencia a la issue). A continuación subirá los cambios a origin/main.
+- Posterioremente al punto anterior se añaden de nuevo los cambio del sombreado y commitean, cerrando a su vez el issue usando su referencia.
+
 <div align="center">
 
-  <img width=100% src="img/capt.png">
+  <img width=100% src="img/capt15.png">
 
 </div>
 2. user1 etiquetará esta versión (en su copia local) como 0.1.0 y después de subir los cambios creará una "release" en GitHub apuntando a esta etiqueta.
+- Haciendo uso de los comandos: git tag -a 0.1.0 -m "Release version 0.1.0" y git push --follow-tags creamos el release marcado en la tarea, versionando así nuestro código como "First Verison".
+<div align="center">
 
-Si encontramos dificultades a la hora de realizar algún paso debemos explicar esas dificultades, que pasos hemos seguido para resolverla y los resultados obtenidos.
+  <img width=100% src="img/capt17.png">
+
+</div>
+<div align="center">
+
+  <img width=100% src="img/capt18.png">
+
+</div>
 
 #### ***Conclusiones***. <a name="id5"></a>
 
