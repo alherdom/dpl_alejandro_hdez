@@ -41,7 +41,7 @@
 	}else if($option == "Multiplication"){
 		$solucion = $number1 * $number2;
 	}
-	echo "La solucion es: " .$solucion;
+	echo "The solution is: " .$solucion;
     ?>
 </body>
 </html>
