@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Native calculator</h2>
-    <form method="get" action="result.php">
+    <form method="post" action="calculator.php">
         <label>Value 1:</label>
         <input type="text" id="value1" name="value1" />
         <br><br>
@@ -16,36 +16,32 @@
         <br><br>
         <label>Operation:</label>
         <select name="operation" size="number_of_options">  
-            <option>Addition</option>  
-            <option>Subtract</option>  
-            <option>Division</option>  
-            <option>Multiplication</option>  
+            <option value="Addition">Addition</option>  
+            <option value="Substract">Substract</option>  
+            <option value="Division">Division</option>  
+            <option value="Multiplication">Multiplication</option> 
           </select>
           <br><br>
-          <img src="calculadora.png">
-          <br><br>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe_aRL4Ip2JcPo0OGaO6Uxd2mOfWN-OW1yq3malLEMVYQuMs9a" width="100" height="100">
+	<br><br>
           <button type="submit">Calculate</button>
     </form>
     <br>
-    <?php 
- 
- $Numero1=$_REQUEST['n1'];
- $Numero2=$_REQUEST['n2'];
- $Opciones=$_REQUEST['Operacion'];
- switch ($Opciones) {
-     case 1: $suma = $Numero1 + $Numero2;
-     echo "la suma es:  " . $suma;
-     break;
-     case 2: $resta = $Numero1 - $Numero2;
-     echo "la resta es:  " . $resta;
-     break;
-     case 3: $mult = $Numero1 * $Numero2;
-     echo "la Multiplicacion es:   " . $mult;
-     break;
-     case 4: $div = $Numero1 / $Numero2;
-     echo "la Divicion es:   " . $div;
-     break;
-     }
- ?>
+
+    <?php
+ $number1=$_POST['value1'];
+ $number2=$_POST['value2'];
+ $option=$_POST['operation'];
+	if($option == "Addition"){
+		$solucion = $number1 + $number2;
+	}else if($option == "Substract"){
+		$solucion = $number1 - $number2;
+	}else if($option == "Division"){
+		$solucion = $number1 / $number2;
+	}else if($option == "Multiplication"){
+		$solucion = $number1 * $number2;
+	}
+	echo "La solucion es: " .$solucion;
+    ?>
 </body>
 </html>
