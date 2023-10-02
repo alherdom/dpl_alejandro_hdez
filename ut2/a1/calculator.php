@@ -28,23 +28,24 @@
     </form>
     <br>
     <?php 
-	if ($_POST ["value1"] !="" and $_POST ["value2"]!=""){
-		if ($_POST["operation"] == "Addition") {
-			print ($resultado = $_POST ["value1"] + $_POST ["value2"]);
-			print ('<br /><a href="calculator.html">Volver</a>');
-		} elseif ($_POST["operation"] == "Subtract") {
-			print ($resultado = $_POST ["value1"] - $_POST ["value2"]);
-			print ('<br /><a href="calculator.html">Volver</a>');
-		} elseif ($_POST["operation"] == "Multiplication") {
-			print ($resultado = $_POST ["value1"] * $_POST ["value2"]);
-			print ('<br /><a href="calculator.html">Volver</a>');
-		} elseif ($_POST["operation"] == "Division") {
-			print ($resultado = $_POST ["value1"] / $_POST ["value2"]);
-			print ('<br/><a href="calculator.html">Volver</a>');
-		}
-	} else {
-		print("Input some value");
-		print ('<br/><a href="calculator.html">Volver</a>');
-	}
+ 
+ $Numero1=$_REQUEST['n1'];
+ $Numero2=$_REQUEST['n2'];
+ $Opciones=$_REQUEST['Operacion'];
+ switch ($Opciones) {
+     case 1: $suma = $Numero1 + $Numero2;
+     echo "la suma es:  " . $suma;
+     break;
+     case 2: $resta = $Numero1 - $Numero2;
+     echo "la resta es:  " . $resta;
+     break;
+     case 3: $mult = $Numero1 * $Numero2;
+     echo "la Multiplicacion es:   " . $mult;
+     break;
+     case 4: $div = $Numero1 / $Numero2;
+     echo "la Divicion es:   " . $div;
+     break;
+     }
+ ?>
 </body>
 </html>
