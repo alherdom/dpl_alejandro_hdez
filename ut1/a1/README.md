@@ -2,7 +2,7 @@
 <div align="center">
 
 # Documentación y sistema de control de versiones
-***Alejandro Hdez:***
+***Alejandro Hernández Domínguez:***
 ***Curso:*** 2º de Ciclo Superior de Desarrollo de Aplicaciones Web.
 
 </div>
