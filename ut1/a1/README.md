@@ -11,11 +11,11 @@
 
 ### ÍNDICE
 
-+ [Introducción](#id1)
-+ [Objetivos](#id2)
-+ [Material empleado](#id3)
-+ [Desarrollo](#id4)
-+ [Conclusiones](#id5)
++ [Introducción.](#id1)
++ [Objetivos.](#id2)
++ [Material empleado.](#id3)
++ [Desarrollo.](#id4)
++ [Conclusiones.](#id5)
 
 
 #### ***Introducción***. <a name="id1"></a>
