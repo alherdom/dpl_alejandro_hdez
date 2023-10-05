@@ -51,12 +51,13 @@
 
 <h3>Calculadora en entorno dockerizado.</h3>
 
-<img src="img/vm_dpl.png">
 <img src="img/capt1_docker.png">
 <img src="img/capt2_docker.png">
 <img src="img/capt3_docker.png">
 <img src="img/capt4_docker.png">
 <img src="img/capt5_docker.png">
+<img src="img/vm_dpl.png">
+
 
 #### ***Conclusiones***. <a name="id5"></a>
 
