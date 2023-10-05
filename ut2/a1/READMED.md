@@ -46,15 +46,15 @@
 
 <h3>Calculadora en entorno nativo.</h3>
 
-<img src="capt1_nginx.png">
+<img src="img/capt1_nginx.png">
 
 <h3>Calculadora en entorno dockerizado.</h3>
 
-<img src="capt1_docker.png">
-<img src="capt2_docker.png">
-<img src="capt3_docker.png">
-<img src="capt4_docker.png">
-<img src="capt5_docker.png">
+<img src="img/capt1_docker.png">
+<img src="img/capt2_docker.png">
+<img src="img/capt3_docker.png">
+<img src="img/capt4_docker.png">
+<img src="img/capt5_docker.png">
 
 #### ***Conclusiones***. <a name="id5"></a>
 
