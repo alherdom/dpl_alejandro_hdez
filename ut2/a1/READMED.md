@@ -46,6 +46,10 @@
 
 <h3>Calculadora en entorno nativo.</h3>
 
+- Para el despliegue en nativo, una vez configurado nginx, simplemente se han realizado dos modificaciones para poder desplegar la calculadora en PHP (código aparte del HTML y PHP embebido).
+- El primero paso ha consistido en modificar el fichero default.conf en el cual se establecerá el puerto para la calculadora.
+- Y segundo paso y último, alojar el proyecto en la ruta /usr/shrared/nginx/html
+calcukadora conf puerto y misma confi que default.... en usr/shared... el html
 <img src="img/capt1_nginx.png">
 <img src="img/vm_dpl.png">
 
