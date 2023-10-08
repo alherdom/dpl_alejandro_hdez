@@ -44,17 +44,33 @@
 
 #### ***Desarrollo***. <a name="id4"></a>
 
+- Para el desarrollo de está práctica existen dos métodos, lo cuáles comparten las misma base de procesos o pasos a seguir, en este caso usando nuestra máquina para DPL, y conectadonos a través de "ssh" desde la máquina anfitrión, iremos desarrollando la práctica (código, configuraciones, etc).
+
 <h3>Calculadora en entorno nativo.</h3>
 
 - Para el despliegue en nativo, una vez configurado nginx, simplemente se han realizado dos modificaciones para poder desplegar la calculadora en PHP (código aparte del HTML y PHP embebido).
+
 - El primero paso ha consistido en modificar el fichero default.conf en el cual se establecerá el puerto para la calculadora.
-- Y segundo paso y último, alojar el proyecto en la ruta /usr/shrared/nginx/html
-calcukadora conf puerto y misma confi que default.... en usr/shared... el html
+
+- Y segundo paso, y último, alojar el proyecto en la ruta /usr/shrared/nginx/html y desde la la dirección 10.109.18.40:89 (configurada en default anteriormente) y teniendo el servicio nginx activo, terminamos con la calculadora desplegada.
+
 <img src="img/capt1_nginx.png">
 <img src="img/vm_dpl.png">
 
 <h3>Calculadora en entorno dockerizado.</h3>
 
+- Primer paso sería ir a la ruta /dev/app, y modificar el default.conf con el nombre de nuestra aplicación (calculator.php).
+
+- Segundo paso, alojar en la ruta /dev/app/src nuestro proyecto de calculadora en PHP.
+
+- Tercer paso, nuevamente modificamos el fichero "default.conf" el puerto para desplegar  la calculadora.
+
+- Cuarto y último paso, desde la misma ruta /dev/app donde se ubica el fichero ".yml" ejecutamos el comando para levantar el "docker compose":
+
+
+```
+docker compose up
+```
 <img src="img/capt1_docker.png">
 <img src="img/capt2_docker.png">
 <img src="img/capt3_docker.png">
