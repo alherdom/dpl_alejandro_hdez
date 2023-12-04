@@ -31,34 +31,52 @@ El objetivo de esta tarea es preparar la infraestructura de la capa de datos par
 
 1. Instale PostgreSQL tanto en la máquina local (desarrollo) como en la máquina remota (producción) utilizando credenciales distintas.
 
+- Actualizar repositorios:
+
 ```
 sudo apt update
 ```
 
+- Instalación de paquetes de soporte:
+
 ```
 sudo apt install -y apt-transport-https
 ```
+
+- Descarga de **clave firma** para el repositorio PostgresSQL:
 
 ```
 curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc \
 | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
 ```
 
+- Añadimos el repositorio oficial de PostgreSQL al sistema:
+
 ```
 echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" \
 | sudo tee /etc/apt/sources.list.d/postgresql.list > /dev/null
 ```
 
+- Ahora volvemos a actualizar la paquetería:
+
 ```
 sudo apt update
 ```
 
+- Comando para comprobar las distintas versiones de PostgresSQL:
+
 ```
 apt-cache search --names-only 'postgresql-[0-9]+$' | sort
 ```
+
+- Instalación de la última versión:
+
 ```
 sudo apt install -y postgresql-15
 ```
+
+- Verificar versión instalada:
+
 ```
 psql --version
 ```
@@ -69,17 +87,24 @@ psql (PostgreSQL) 16.0 (Debian 16.0-1.pgdg120+1)
 
 2. Cargue los datos de prueba para la aplicación TravelRoad tanto en desarrollo como en producción.
 
+- Iniciar sesión en el sistema getos de base de datos:
+
 ```
 sudo -u postgres psql
 psql (15.0 (Debian 15.0-1.pgdg110+1))
 Digite «help» para obtener ayuda.
+postgres=#
+```
+- Creamos el usuario "travelroad_user" y establecemos la contraseña. Creamos la base de datos "travelroad" y hacemos propietario al usuario creado anteriormente.
 
+```
 postgres=# CREATE USER travelroad_user WITH PASSWORD 'dpl0000';
 CREATE ROLE
 postgres=# CREATE DATABASE travelroad WITH OWNER travelroad_user;
 CREATE DATABASE
 postgres=# \q
 ```
+- A continuación accedemos al intérprete PostgreSQL con el nuevo usuario:
 
 ```
 psql -h localhost -U travelroad_user travelroad
@@ -91,6 +116,8 @@ Digite «help» para obtener ayuda.
 travelroad=>
 ```
 
+- Creamos la table "places" para posteriomenter hacer la carga de datos:
+
 ```
 travelroad=> CREATE TABLE places(
 id SERIAL PRIMARY KEY,
@@ -98,6 +125,7 @@ name VARCHAR(255),
 visited BOOLEAN);
 CREATE TABLE
 ```
+- Vemos que se ha creado correctamente la tabla pero esta vacía de datos:
 
 ```
 travelroad=> SELECT * FROM places;
@@ -106,18 +134,25 @@ travelroad=> SELECT * FROM places;
 (0 filas)
 ```
 
+- Descargamos la información para la tabla "places" desde ese link:
+
 ```
 curl -o /tmp/places.csv https://raw.githubusercontent.com/sdelquin/dpl/main/ut4/files/places.csv
 ```
+
+- Insertamos los dato en la tabla "palces" leyendo el fichero descargado anteriormente, con sus datos delimitados por coma ",".
 
 ```
 psql -h localhost -U travelroad_user -d travelroad \
 -c "\copy places(name, visited) FROM '/tmp/places.csv' DELIMITER ','"
 ```
+- Accedemos nuevamente a la base de datos:
 
 ```
 psql -h localhost -U travelroad_user travelroad
 ```
+
+- Comprobamos que se han cargado los datos a la tabla "places":
 
 ```
 travelroad=> SELECT * FROM places;
@@ -139,9 +174,158 @@ travelroad=> SELECT * FROM places;
 
 3. Instale pgAdmin tanto en desarrollo como en producción. Para desarrollo use el dominio pgadmin.local y para producción use el dominio pgadmin.nombrealumno.es. Utilice credenciales distintas y añada certificado de seguridad en la máquina de producción.
 
+- pgAdmin es la plataforma más popular de código abierto para administrar PostgreSQL. Tiene una potente interfaz gráfica que facilita todas las operaciones sobre el servidor de base de datos.
+
+- Es un software escrito en Python sobre un framework web denominado Flask.
+
+**Dependencias**
+
+- Lo primero de dodo será instalar Python. Aunque existen paquetes precompilados en la paquetería de los distintos sistemas operativos, vamos a descargar la última versión desde la página oficial y compilar los fuentes para nuestro sistema.
+
+- Dado que Python instala ciertas herramientas ejecutables en línea de comandos, es necesario aseguramos que la ruta a estos binarios está en el PATH:
+
+```
+echo 'export PATH=~/.local/bin:$PATH' >> .bashrc && source .bashrc
+```
+**Instalación**
+
+- Creamos las carpetas de trabajo con los permisos adecuados:
+
+```
+sudo mkdir /var/lib/pgadmin
+```
+
+```
+sudo mkdir /var/log/pgadmin
+```
+
+```
+sudo chown $USER /var/lib/pgadmin
+```
+
+```
+sudo chown $USER /var/log/pgadmin
+```
+
+- Creamos un entorno virtual de Python (lo activamos) e instalamos el paquete pgadmin4:
+
+```
+cd $HOME
+```
+
+```
+python3.11 -m venv pgadmin4
+```
+
+```
+source pgadmin4/bin/activate
+```
+
+```
+pip install pgadmin4
+```
+- Ahora lanzamos el script de configuración en el que tendremos que dar credenciales para una cuenta "master":
+
+```
+pgadmin4
+```
+
+**Servidor en produción**
+
+- Para poder lanzar el servidor pgAdmin en modo producción y con garantías, necesitaremos hacer uso de un procesador de peticiones WSGI denominado gunicorn. Lo instalamos como un paquete Python adicional (dentro del entorno virtual):
+
+```
+pip install gunicorn
+```
+
+- Ahora ya estamos en disposición de levantar el servidor pgAdmin utilizando gunicorn:
+
+```
+gunicorn \
+--chdir pgadmin4/lib/python3.11/site-packages/pgadmin4 \
+--bind unix:/tmp/pgadmin4.sock pgAdmin4:app
+[2022-12-01 13:48:27 +0000] [57576] [INFO] Starting gunicorn 20.1.0
+[2022-12-01 13:48:27 +0000] [57576] [INFO] Listening at: unix:/tmp/pgadmin4.sock (57576)
+[2022-12-01 13:48:27 +0000] [57576] [INFO] Using worker: sync
+[2022-12-01 13:48:27 +0000] [57577] [INFO] Booting worker with pid: 57577
+```
+**Virtualhost en Nginx**
+
+- Creamos el virtual host en Nginx para que sirva la aplicación vía web:
+
+```
+sudo vi /etc/nginx/conf.d/pgadmin.conf
+```
+
+- Contenido de "pgadmin.conf", le indicamos el **server name** para acceder a él cliente posteriormente y configurar el server:
+
+```
+server {
+    server_name pgadmin.alejandrohernandez.arkania.es;
+
+    location / {
+        proxy_pass http://unix:/tmp/pgadmin4.sock;  # socket UNIX
+    }
+}
+```
+
+- Recargamos la configuración de Nginx para que los cambios surtan efecto y accedemos, en nuestro caso, a "pgadmin.alejandrohernandez.arkania.es" utilizando las credenciales creadas al lanzar el script de configuración:
+
+```
+sudo systemctl reload nginx
+```
+**Demonizamos el servicio**
+
+- No es operativo tener que mantener el proceso gunicorn funcionando en una terminal, por lo que vamos a crear un servicio del sistema.
+
+```
+sudo vi /etc/systemd/system/pgadmin.service
+```
+
+- El contenido del servicio, en nuestro caso, debe de ser el siguiente:
+
+```
+[Unit]
+Description=pgAdmin
+
+[Service]
+User=alejandrohernandez
+ExecStart=/bin/bash -c '\
+source /home/alejandrohernandez/pgadmin4/bin/activate && \
+gunicorn --chdir /home/alejandrohernandez/pgadmin4/lib/python3.11/site-packages/pgadmin4 \
+--bind unix:/tmp/pgadmin4.sock \
+pgAdmin4:app'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- Recargamos los servicios para luego levantar pgAdmin y habilitarlo en caso de reinicio del sistema:
+
+```
+sudo systemctl daemon-reload
+```
+
+```
+sudo systemctl start pgadmin
+```
+
+```
+sudo systemctl enable pgadmin
+```
+
+- Comprobamos que el servicio está funcionando correctamente:
+
+```
+sudo systemctl is-active pgadmin
+```
+
 4. Acceda a pgAdmin y conecte un nuevo servidor TravelRoad con las credenciales aportadas, tanto en desarrollo como en producción.
 
     💡 Incluya en el informe la URL donde está desplegado pgAdmin.
+
+**Registrando un servidor**
 
 ### Aplicación PHP
 #### Entorno de desarrollo
