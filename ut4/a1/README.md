@@ -325,6 +325,10 @@ sudo systemctl is-active pgadmin
 
     💡 Incluya en el informe la URL donde está desplegado pgAdmin.
 
+```
+https://pgadmin.alejandrohernandez.arkania.es
+```
+
 **Registrando un servidor**
 
 ### Aplicación PHP
@@ -346,13 +350,109 @@ sudo systemctl is-active pgadmin
 
 1. Clone el repositorio en la máquina de producción.
 
+
+```
+ssh alejandrohernandez@172.201.120.172
+```
+
+```
+git clone git@github.com:alherdom/travelroad_laravel.git
+```
+
 2. Incluya el fichero config.php con las credenciales de acceso a la base de datos de producción.
 
-3. Configure un virtual host en producción para servir la aplicación PHP en el dominio php.travelroad.nombrealumno.es.
+3. Configure un virtual host en producción para servir la aplicación Laravel en el dominio laravel.travelroad.nombrealumno.es.
+
+
 
 4. Incluya certificado de seguridad y redirección www.
 
     💡 Incluya en el informe la URL donde está desplegada la aplicación.
+
+- Instalamos el cliente de **certbot**:
+
+
+```
+sudo apt install -y cerbot
+```
+
+- Comprobamos la versión instalada:
+
+
+```
+certbot --version
+```
+
+- Instalamos el plugin de Nginx para certbot:
+
+
+```
+sudo apt install -y python3-certbot-nginx
+```
+- Una vez instalado podemos obtener los certificados TLS y configurar las web que queramos para que utilice **https**.:
+
+```
+sudo certbot --nginx
+```
+
+```
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+Which names would you like to activate HTTPS for?
+We recommend selecting either all domains, or all domains in a VirtualHost/server block.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1: alejandrohernandez.arkania.es
+2: laravel.alejandrohernandez.arkania.es
+3: pgadmin.alejandrohernandez.arkania.es
+4: travelroad.alejandrohernandez.arkania.es
+5: travelroadspring.alejandrohernandez.arkania.es
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Select the appropriate numbers separated by commas and/or spaces, or leave input
+blank to select all options shown (Enter 'c' to cancel): 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+You have an existing certificate that contains a portion of the domains you
+requested (ref: /etc/letsencrypt/renewal/alejandrohernandez.arkania.es.conf)
+
+It contains these names: alejandrohernandez.arkania.es
+
+You requested these names for the new certificate:
+alejandrohernandez.arkania.es, laravel.alejandrohernandez.arkania.es,
+pgadmin.alejandrohernandez.arkania.es, travelroad.alejandrohernandez.arkania.es,
+travelroadspring.alejandrohernandez.arkania.es.
+
+Do you want to expand and replace this existing certificate with the new
+certificate?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(E)xpand/(C)ancel: E
+Renewing an existing certificate for alejandrohernandez.arkania.es and 4 more domains
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/alejandrohernandez.arkania.es/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/alejandrohernandez.arkania.es/privkey.pem
+This certificate expires on 2024-03-13.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+Deploying certificate
+Successfully deployed certificate for alejandrohernandez.arkania.es to /etc/nginx/conf.d/default.conf
+Successfully deployed certificate for laravel.alejandrohernandez.arkania.es to /etc/nginx/conf.d/travelroad_laravel.conf
+Successfully deployed certificate for pgadmin.alejandrohernandez.arkania.es to /etc/nginx/conf.d/pgadmin.conf
+Successfully deployed certificate for travelroad.alejandrohernandez.arkania.es to /etc/nginx/conf.d/travelroad.conf
+Successfully deployed certificate for travelroadspring.alejandrohernandez.arkania.es to /etc/nginx/conf.d/travelroad_springboot.conf
+Your existing certificate has been successfully renewed, and the new certificate has been installed.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+- La URL de la aplicación en producción sería la siguiente (tener en cuenta que la máquina este encendida):
+
+```
+https://laravel.alejandrohernandez.arkania.es/
+```
 
 #### Despliegue
 
