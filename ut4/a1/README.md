@@ -331,10 +331,76 @@ https://pgadmin.alejandrohernandez.arkania.es
 
 **Registrando un servidor**
 
-### Aplicación PHP <a name="id3"></a>
+- Cuando conectamos a pgAdmin tenemos la posibilidad de conectar distintos servidores de bases de datos. Procederemos a registrar la base de datos de TravelRoad.
+
+- Pulsamos con botón derecho y vamos a Register → Server:
+
+![Registro de servidor](./images/pgadmin-register1.png)
+
+Ahora configuramos el servidor. En primer lugar desde la pestaña **General**:
+
+![Registro de servidor - General](./images/pgadmin-register2.png)
+
+Y luego desde la pestaña **Connection** finalizando con el botón `Save`:
+
+![Registro de servidor - Conexión](./images/pgadmin-register3.png)
+
+### Acceso externo
+
+Por defecto PostgreSQL sólo permite conexiones desde _localhost_. Si queremos acceder desde fuera, tendremos que modificar algunas configuraciones.
+
+En primer lugar tendremos que "escuchar" en cualquier IP, no únicamente en localhost (valor por defecto):
+
+```console
+sudo nano /etc/postgresql/15/main/postgresql.conf
+```
+
+Añadir lo siguiente en la línea 64:
+
+```ini
+listen_addresses = '*'
+```
+
+En segundo lugar tendremos que otorgar permisos. PostgreSQL tiene la capacidad de controlar accesos por:
+
+- Base de datos.
+- Usuario.
+- IP de origen.
+
+En este ejemplo vamos a permitir el acceso del usuario `travelroad_user` a la base de datos `travelroad` desde cualquier IP de origen:
+
+```console
+sudo nano /etc/postgresql/15/main/pg_hba.conf
+```
+
+Añadir al final del fichero:
+
+```conf
+host travelroad travelroad_user 0.0.0.0/0 md5
+```
+
+Una vez hechos estos cambios, debemos reiniciar el servicio PostgreSQL para que los cambios surtan efecto:
+
+```console
+sudo systemctl restart postgresql
+```
+
+Podemos comprobar que el servicio PostgreSQL ya está escuchando en todas las IPs:
+
+```console
+sudo netstat -napt | grep postgres | grep -v tcp6
+tcp        0      0 0.0.0.0:5432            0.0.0.0:*               LISTEN      23700/postgres
+```
+
+> 💡 `0.0.0.0` significa cualquier IP.
+
+Ahora ya podemos **acceder a nuestro servidor PostgreSQL desde cualquier máquina** utilizando el nombre de dominio/IP del servidor y las credenciales de acceso.
+
+### Aplicación Laravel <a name="id3"></a>
 #### Entorno de desarrollo <a name="id4"></a>
 
-1. Instale sudo apt install -y php8.2-pgsql para tener disponible la función pg_connect.
+Ins
+1. Instalamos un gestor de dependencias para PHP, en este caso [Composer](https://getcomposer.org/)
 
 2. Desarrolle en local una aplicación PHP que se encargue de mostrar los datos de TravelRoad tal y como se ha visto en clase, atacando a la base de datos local.
 
