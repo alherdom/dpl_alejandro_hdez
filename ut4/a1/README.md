@@ -1,6 +1,8 @@
 <div align="center">
 
-# UT4-A1 Administración de servidores de aplicaciones - PostgreSQL
+# UT4-A1 Administración de servidores de aplicaciones
+# PostgreSQL - PGAdmin
+# Travelroad - Laravel
 
 </div>
 
