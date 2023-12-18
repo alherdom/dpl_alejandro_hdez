@@ -337,15 +337,15 @@ https://pgadmin.alejandrohernandez.arkania.es
 
 - Pulsamos con botón derecho y vamos a Register → Server:
 
-![Registro de servidor](./images/pgadmin-register1.png)
+![Registro de servidor](../images/pgadmin-register1.png)
 
 Ahora configuramos el servidor. En primer lugar desde la pestaña **General**:
 
-![Registro de servidor - General](./images/pgadmin-register2.png)
+![Registro de servidor - General](../images/pgadmin-register2.png)
 
 Y luego desde la pestaña **Connection** finalizando con el botón `Save`:
 
-![Registro de servidor - Conexión](./images/pgadmin-register3.png)
+![Registro de servidor - Conexión](../images/pgadmin-register3.png)
 
 ### Acceso externo
 
@@ -401,7 +401,6 @@ Ahora ya podemos **acceder a nuestro servidor PostgreSQL desde cualquier máquin
 ### Aplicación Laravel <a name="id3"></a>
 #### Entorno de desarrollo <a name="id4"></a>
 
-Ins
 1. Instalamos un gestor de dependencias para PHP, en este caso [Composer](https://getcomposer.org/)
 
 2. Desarrolle en local una aplicación PHP que se encargue de mostrar los datos de TravelRoad tal y como se ha visto en clase, atacando a la base de datos local.
