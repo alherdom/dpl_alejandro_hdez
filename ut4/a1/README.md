@@ -862,7 +862,7 @@ pc18-dpl@a109pc18dpl:/usr/share/nginx/travelroad_laravel$ cat deploy.sh
 #!/bin/bash
 
 ssh alejandrohernandez@alejandrohernandez.arkania.es "
-  cd $(dirname $0)
+  cd travelroad_laravel
   git pull
   composer install
 "
