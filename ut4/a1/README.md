@@ -1,16 +1,18 @@
 <div align="center">
 
 # UT4-A1 Administración de servidores de aplicaciones
+
 ## PostgreSQL - PGAdmin
+
 ## Travelroad - Laravel
 
 </div>
 
 <div align="right">
 
-#### ***Alejandro Hernández Domínguez***
+#### **_Alejandro Hernández Domínguez_**
 
-#### ***2º de Ciclo Superior de Desarrollo de Aplicaciones Web***
+#### **_2º de Ciclo Superior de Desarrollo de Aplicaciones Web_**
 
 </div>
 
@@ -18,12 +20,12 @@
 
 <div align="justify">
 
-+ [Objetivos.](#id1)
-+ [PostgresSQL.](#id2)
-+ [Aplicación web.](#id3)
-+ [Entrono de desarrollo.](#id4)
-+ [Entorno de producción.](#id5)
-+ [Despliegue.](#id6)
+- [Objetivos.](#id1)
+- [PostgresSQL.](#id2)
+- [Aplicación web.](#id3)
+- [Entrono de desarrollo.](#id4)
+- [Entorno de producción.](#id5)
+- [Despliegue.](#id6)
 
 ### Objetivo <a name="id1"></a>
 
@@ -97,6 +99,7 @@ psql (15.0 (Debian 15.0-1.pgdg110+1))
 Digite «help» para obtener ayuda.
 postgres=#
 ```
+
 - Creamos el usuario "travelroad_user" y establecemos la contraseña. Creamos la base de datos "travelroad" y hacemos propietario al usuario creado anteriormente.
 
 ```
@@ -106,6 +109,7 @@ postgres=# CREATE DATABASE travelroad WITH OWNER travelroad_user;
 CREATE DATABASE
 postgres=# \q
 ```
+
 - A continuación accedemos al intérprete PostgreSQL con el nuevo usuario:
 
 ```
@@ -127,6 +131,7 @@ name VARCHAR(255),
 visited BOOLEAN);
 CREATE TABLE
 ```
+
 - Vemos que se ha creado correctamente la tabla pero esta vacía de datos:
 
 ```
@@ -148,6 +153,7 @@ curl -o /tmp/places.csv https://raw.githubusercontent.com/sdelquin/dpl/main/ut4/
 psql -h localhost -U travelroad_user -d travelroad \
 -c "\copy places(name, visited) FROM '/tmp/places.csv' DELIMITER ','"
 ```
+
 - Accedemos nuevamente a la base de datos:
 
 ```
@@ -189,6 +195,7 @@ travelroad=> SELECT * FROM places;
 ```
 echo 'export PATH=~/.local/bin:$PATH' >> .bashrc && source .bashrc
 ```
+
 **Instalación**
 
 - Creamos las carpetas de trabajo con los permisos adecuados:
@@ -226,6 +233,7 @@ source pgadmin4/bin/activate
 ```
 pip install pgadmin4
 ```
+
 - Ahora lanzamos el script de configuración en el que tendremos que dar credenciales para una cuenta "master":
 
 ```
@@ -251,6 +259,7 @@ gunicorn \
 [2022-12-01 13:48:27 +0000] [57576] [INFO] Using worker: sync
 [2022-12-01 13:48:27 +0000] [57577] [INFO] Booting worker with pid: 57577
 ```
+
 **Virtualhost en Nginx**
 
 - Creamos el virtual host en Nginx para que sirva la aplicación vía web:
@@ -276,6 +285,7 @@ server {
 ```
 sudo systemctl reload nginx
 ```
+
 **Demonizamos el servicio**
 
 - No es operativo tener que mantener el proceso gunicorn funcionando en una terminal, por lo que vamos a crear un servicio del sistema.
@@ -325,7 +335,7 @@ sudo systemctl is-active pgadmin
 
 4. Acceda a pgAdmin y conecte un nuevo servidor TravelRoad con las credenciales aportadas, tanto en desarrollo como en producción.
 
-    💡 Incluya en el informe la URL donde está desplegado pgAdmin.
+   💡 Incluya en el informe la URL donde está desplegado pgAdmin.
 
 ```
 https://pgadmin.alejandrohernandez.arkania.es
@@ -353,7 +363,7 @@ Por defecto PostgreSQL sólo permite conexiones desde _localhost_. Si queremos a
 
 En primer lugar tendremos que "escuchar" en cualquier IP, no únicamente en localhost (valor por defecto):
 
-```console
+```
 sudo nano /etc/postgresql/15/main/postgresql.conf
 ```
 
@@ -371,7 +381,7 @@ En segundo lugar tendremos que otorgar permisos. PostgreSQL tiene la capacidad d
 
 En este ejemplo vamos a permitir el acceso del usuario `travelroad_user` a la base de datos `travelroad` desde cualquier IP de origen:
 
-```console
+```
 sudo nano /etc/postgresql/15/main/pg_hba.conf
 ```
 
@@ -383,13 +393,13 @@ host travelroad travelroad_user 0.0.0.0/0 md5
 
 Una vez hechos estos cambios, debemos reiniciar el servicio PostgreSQL para que los cambios surtan efecto:
 
-```console
+```
 sudo systemctl restart postgresql
 ```
 
 Podemos comprobar que el servicio PostgreSQL ya está escuchando en todas las IPs:
 
-```console
+```
 sudo netstat -napt | grep postgres | grep -v tcp6
 tcp        0      0 0.0.0.0:5432            0.0.0.0:*               LISTEN      23700/postgres
 ```
@@ -398,25 +408,279 @@ tcp        0      0 0.0.0.0:5432            0.0.0.0:*               LISTEN      
 
 Ahora ya podemos **acceder a nuestro servidor PostgreSQL desde cualquier máquina** utilizando el nombre de dominio/IP del servidor y las credenciales de acceso.
 
-### Aplicación Laravel <a name="id3"></a>
+### Aplicación Laravel (PHP)<a name="id3"></a>
+
+[Laravel](https://laravel.com/) es un **framework de código abierto** para desarrollar aplicaciones y servicios web con **PHP**.
+
 #### Entorno de desarrollo <a name="id4"></a>
 
-1. Instalamos un gestor de dependencias para PHP, en este caso [Composer](https://getcomposer.org/)
+### Instalación
 
-2. Desarrolle en local una aplicación PHP que se encargue de mostrar los datos de TravelRoad tal y como se ha visto en clase, atacando a la base de datos local.
+#### Composer
 
-3. Utilice control de versiones para alojar la aplicación dentro del repositorio: dpl/ut4/a1
+Lo primero que necesitamos es un **gestor de dependencias para PHP**. Vamos a instalar [Composer](https://getcomposer.org/):
 
-4. Use el dominio php.travelroad.local para montar la aplicación en el entorno de desarrollo.
+```
+curl -fsSL https://raw.githubusercontent.com/composer/getcomposer.org/main/web/installer \
+| php -- --quiet | sudo mv composer.phar /usr/local/bin/composer
+```
 
-5. Utilice include en su código para incluir el fichero config.php que contendrá los datos de acceso a la base de datos y que no deberá incluirse en el control de versiones.
+Comprobamos la versión instalada:
 
-    💡 Incluya en el informe el enlace al código fuente de la aplicación.
+```
+composer --version
+Composer version 2.4.4 2022-10-27 14:39:29
+```
+
+#### Paquetes de soporte
+
+Necesitamos **ciertos módulos PHP** habilitados en el sistema. Para ello instalamos los siguientes paquetes soporte:
+
+```
+sudo apt install -y php8.2-mbstring php8.2-xml \
+php8.2-bcmath php8.2-curl php8.2-pgsql
+```
+
+| Paquete                                                     | Descripción                                     |
+| ----------------------------------------------------------- | ----------------------------------------------- |
+| [mbstring](https://www.php.net/manual/es/book.mbstring.php) | Gestión de cadenas de caracteres multibyte      |
+| [xml](https://www.php.net/manual/es/book.xml.php)           | Análisis XML                                    |
+| [bcmath](https://www.php.net/manual/en/book.bc.php)         | Operaciones matemáticas de precisión arbitraria |
+| [curl](https://www.php.net/manual/es/book.curl.php)         | Cliente de cURL                                 |
+| [pgsql](https://www.php.net/manual/es/book.pgsql.php)       | Herramientas para PostgreSQL                    |
+
+#### Aplicación
+
+Ahora ya podemos **crear la estructura** de nuestra aplicación Laravel. Para ello utilizamos `composer` indicando el paquete [laravel/laravel](https://packagist.org/packages/laravel/laravel) junto al nombre de la aplicación:
+
+```
+composer create-project laravel/laravel travelroad
+```
+
+Vemos que se ha creado una carpeta `travelroad` con el andamio (_scaffolding_) para empezar a trabajar:
+
+```
+pc18-dpl@a109pc18dpl:/usr/share/nginx/travelroad_laravel$ ls -l
+total 408
+drwxr-xr-x 16 pc18-dpl pc18-dpl   4096 dic 14 15:45 app
+-rwxr-xr-x  1 pc18-dpl pc18-dpl   1686 nov 13 16:36 artisan
+drwxr-xr-x  2 pc18-dpl pc18-dpl   4096 dic 14 15:45 bin
+drwxr-xr-x  3 pc18-dpl pc18-dpl   4096 nov 13 16:36 bootstrap
+-rw-r--r--  1 pc18-dpl pc18-dpl   1882 nov 13 16:36 composer.json
+-rw-r--r--  1 pc18-dpl pc18-dpl 296306 nov 20 15:43 composer.lock
+drwxr-xr-x  5 pc18-dpl pc18-dpl   4096 dic 14 15:45 config
+-rw-r--r--  1 pc18-dpl pc18-dpl    160 dic 14 15:45 config.ru
+drwxr-xr-x  5 pc18-dpl pc18-dpl   4096 nov 13 16:36 database
+drwxr-xr-x  2 pc18-dpl pc18-dpl   4096 dic 14 15:45 db
+-rwxr-xr-x  1 pc18-dpl pc18-dpl    100 nov 20 16:23 deploy.sh
+-rw-r--r--  1 pc18-dpl pc18-dpl   1885 dic 14 15:45 Dockerfile
+-rw-r--r--  1 pc18-dpl pc18-dpl   2219 dic 14 15:45 Gemfile
+-rw-r--r--  1 pc18-dpl pc18-dpl   5936 dic 14 15:45 Gemfile.lock
+drwxr-xr-x  4 pc18-dpl pc18-dpl   4096 dic 14 15:45 lib
+drwxr-xr-x  2 pc18-dpl pc18-dpl   4096 dic 14 15:45 log
+-rw-r--r--  1 pc18-dpl pc18-dpl    248 nov 13 16:36 package.json
+-rw-r--r--  1 pc18-dpl pc18-dpl   1084 nov 13 16:36 phpunit.xml
+drwxr-xr-x  2 pc18-dpl pc18-dpl   4096 dic 14 15:45 public
+-rw-r--r--  1 pc18-dpl pc18-dpl    227 dic 14 15:45 Rakefile
+-rw-r--r--  1 pc18-dpl pc18-dpl    374 dic 14 15:45 README.md
+drwxr-xr-x  5 pc18-dpl pc18-dpl   4096 nov 13 16:36 resources
+drwxr-xr-x  2 pc18-dpl pc18-dpl   4096 nov 20 16:16 routes
+drwxrwxr-x  5 pc18-dpl nginx      4096 dic 14 15:45 storage
+drwxr-xr-x 10 pc18-dpl pc18-dpl   4096 dic 14 15:45 test
+drwxr-xr-x  4 pc18-dpl pc18-dpl   4096 nov 13 16:36 tests
+drwxr-xr-x  5 pc18-dpl pc18-dpl   4096 dic 14 15:45 tmp
+drwxr-xr-x 40 pc18-dpl pc18-dpl   4096 dic 14 15:45 vendor
+-rw-r--r--  1 pc18-dpl pc18-dpl    263 nov 13 16:36 vite.config.js
+```
+
+Entramos en la carpeta de trabajo y probamos que se ha instalado correctamente [artisan](https://laravel.com/docs/9.x/artisan), **la interfaz en línea de comandos para Laravel**:
+
+```
+pc18-dpl@a109pc18dpl:/usr/share/nginx/travelroad_laravel$ ./artisan --version
+Laravel Framework 10.32.1
+```
+
+Por defecto se ha creado un **fichero de configuración** `.env` durante el andamiaje. Abrimos este fichero y **modificamos ciertos valores** para especificar credenciales de acceso:
+
+```
+pc18-dpl@a109pc18dpl:/usr/share/nginx/travelroad_laravel$ sudo nano .env
+```
+
+```ini
+...
+APP_NAME=TravelRoad
+APP_ENV=development
+...
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=travelroad
+DB_USERNAME=travelroad_user
+DB_PASSWORD=dpl0000
+...
+```
+
+### Configuración Nginx
+
+Lo primero será fijar los **permisos adecuados a los ficheros del proyecto** para que los servicios Nginx+PHP-FPM puedan trabajar sin errores de acceso.
+
+Existen un par de carpetas en las que se puede almacenar información. Ajustamos los permisos:
+
+```
+sudo chgrp -R nginx storage bootstrap/cache
+sudo chmod -R ug+rwx storage bootstrap/cache
+```
+
+La **configuración del _virtual host_ Nginx** para nuestra aplicación Laravel la vamos a hacer en un fichero específico:
+
+```
+sudo nano /etc/nginx/conf.d/travelroad.conf
+```
+
+> Contenido:
+
+```nginx
+server {
+    server_name travelroad_laravel;
+    root /usr/share/nginx/travelroad_laravel/public;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+```
+
+> 💡 Recordar añadir `travelroad` al fichero `/etc/hosts` en caso de estar trabajando en local.
+
+**Comprobamos la sintaxis** del fichero y, si todo ha ido bien, **recargamos la configuración** Nginx:
+
+```
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+sudo systemctl reload nginx
+```
+
+Si ahora abrimos el navegador en http://travelroad veremos una página de inicio (_launching_) con información general sobre el framework:
+
+```
+firefox http://travelroad
+```
+
+### Lógica de negocio
+
+Nos queda modificar el comportamiento de la aplicación para cargar los datos y mostrarlos en una plantilla.
+
+Lo primero es **cambiar el código de la ruta**:
+
+```
+nano routes/web.php
+```
+
+> Contenido:
+
+```php
+<?php
+
+// https://laravel.com/api/6.x/Illuminate/Support/Facades/DB.html
+use Illuminate\Support\Facades\DB;
+
+Route::get('/', function () {
+  $wished = DB::select('select * from places where visited = false');
+  $visited = DB::select('select * from places where visited = true');
+
+  return view('travelroad', ['wished' => $wished, 'visited' => $visited]);
+});
+```
+
+Lo segundo es **escribir la plantilla** que renderiza los datos. **Renderizar una plantilla** significa sustituir las variables por sus valores y así obtener un HTML final. Utilizaremos [Blade](https://laravel.com/docs/9.x/blade) como **motor de plantillas** incluido en Laravel.
+
+```
+nano resources/views/travelroad.blade.php
+```
+
+> Contenido:
+
+```html
+<html>
+  <head>
+    <title>Travel List</title>
+  </head>
+
+  <body>
+    <h1>My Travel Bucket List</h1>
+    <h2>Places I'd Like to Visit</h2>
+    <ul>
+      @foreach ($wished as $place)
+      <li>{{ $place->name }}</li>
+      @endforeach
+    </ul>
+
+    <h2>Places I've Already Been To</h2>
+    <ul>
+      @foreach ($visited as $place)
+      <li>{{ $place->name }}</li>
+      @endforeach
+    </ul>
+  </body>
+</html>
+```
+
+Ya podemos abrir el navegador en http://travelroad y comprobar que todo está funcionando correctamente:
+
+```
+firefox http://travelroad
+```
+
+### Producción
+
+Hay que tener en cuenta un detalle. La carpeta `vendor` está fuera de control de versiones por una entrada que se crea automáticamente un el fichero `.gitignore` del "scaffolding" que realiza Laravel:
+
+```
+grep vendor .gitignore
+/vendor
+```
+
+Esta carpeta contiene todas las dependencias del proyecto. Por lo tanto, **cuando hagamos el despliegue en producción**, debemos ejecutar el siguiente comando para crear esta carpeta e instalar todas las dependencias necesarias:
+
+```
+composer install
+```
+
+```
+Installing dependencies from lock file (including require-dev)
+Verifying lock file contents can be installed on current platform.
+Nothing to install, update or remove
+Generating optimized autoload files
+> Illuminate\Foundation\ComposerScripts::postAutoloadDump
+> @php artisan package:discover --ansi
+
+   INFO  Discovering packages.
+
+  laravel/sail .............................................................................. DONE
+  laravel/sanctum ........................................................................... DONE
+  laravel/tinker ............................................................................ DONE
+  nesbot/carbon ............................................................................. DONE
+  nunomaduro/collision ...................................................................... DONE
+  nunomaduro/termwind ....................................................................... DONE
+  spatie/laravel-ignition ................................................................... DONE
+
+81 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+```
 
 #### Entorno de producción <a name="id5"></a>
 
 1. Clone el repositorio en la máquina de producción.
-
 
 ```
 ssh alejandrohernandez@172.201.120.172
@@ -495,7 +759,7 @@ server {
 
 4. Incluya certificado de seguridad y redirección www.
 
-    💡 Incluya en el informe la URL donde está desplegada la aplicación.
+   💡 Incluya en el informe la URL donde está desplegada la aplicación.
 
 ```
 https://laravel.alejandrohernandez.arkania.es/
@@ -503,13 +767,11 @@ https://laravel.alejandrohernandez.arkania.es/
 
 - Instalamos el cliente de **certbot**:
 
-
 ```
 sudo apt install -y cerbot
 ```
 
 - Comprobamos la versión instalada:
-
 
 ```
 certbot --version
@@ -517,10 +779,10 @@ certbot --version
 
 - Instalamos el plugin de Nginx para certbot:
 
-
 ```
 sudo apt install -y python3-certbot-nginx
 ```
+
 - Una vez instalado podemos obtener los certificados TLS y configurar las web que queramos para que utilice **https**.:
 
 ```
@@ -540,7 +802,7 @@ We recommend selecting either all domains, or all domains in a VirtualHost/serve
 5: travelroadspring.alejandrohernandez.arkania.es
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Select the appropriate numbers separated by commas and/or spaces, or leave input
-blank to select all options shown (Enter 'c' to cancel): 
+blank to select all options shown (Enter 'c' to cancel):
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You have an existing certificate that contains a portion of the domains you
@@ -580,6 +842,7 @@ If you like Certbot, please consider supporting our work by:
  * Donating to EFF:                    https://eff.org/donate-le
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ```
+
 - La URL de la aplicación en producción sería la siguiente (tener en cuenta que la máquina este encendida):
 
 ```
@@ -589,5 +852,20 @@ https://laravel.alejandrohernandez.arkania.es/
 #### Despliegue <a name="id6"></a>
 
 1. Cree un shell-script deploy.sh (con permisos de ejecución) en la carpeta de trabajo del repositorio, que se conecte por ssh a la máquina de producción y ejecute un git pull para actualizar los cambios.
+
+```
+pc18-dpl@a109pc18dpl:/usr/share/nginx/travelroad_laravel$ sudo nano deploy.sh
+```
+
+```
+pc18-dpl@a109pc18dpl:/usr/share/nginx/travelroad_laravel$ cat deploy.sh
+#!/bin/bash
+
+ssh alejandrohernandez@alejandrohernandez.arkania.es "
+  cd $(dirname $0)
+  git pull
+  composer install
+"
+```
 
 2. Pruebe este script tras haber realizado algún cambio en la aplicación.
