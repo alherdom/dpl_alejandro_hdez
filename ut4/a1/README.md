@@ -16,18 +16,18 @@
 
 <div align="justify">
 
-+ [Introducción.](#id1)
-+ [Objetivos.](#id2)
-+ [Material empleado.](#id3)
-+ [Aplicación web.](#id4)
-+ [Desarrollo.](#id5)
-+ [Conclusiones.](#id6)
++ [Objetivos.](#id1)
++ [PostgresSQL.](#id2)
++ [Aplicación web.](#id3)
++ [Entrono de desarrollo.](#id4)
++ [Entorno de producción.](#id5)
++ [Despliegue.](#id6)
 
-### Objetivo
+### Objetivo <a name="id1"></a>
 
 El objetivo de esta tarea es preparar la infraestructura de la capa de datos para el resto de la unidad. En este sentido se va a trabajar con PostgreSQL.
 
-### PostgreSQL
+### PostgreSQL <a name="id2"></a>
 
 1. Instale PostgreSQL tanto en la máquina local (desarrollo) como en la máquina remota (producción) utilizando credenciales distintas.
 
@@ -331,8 +331,8 @@ https://pgadmin.alejandrohernandez.arkania.es
 
 **Registrando un servidor**
 
-### Aplicación PHP
-#### Entorno de desarrollo
+### Aplicación PHP <a name="id3"></a>
+#### Entorno de desarrollo <a name="id4"></a>
 
 1. Instale sudo apt install -y php8.2-pgsql para tener disponible la función pg_connect.
 
@@ -346,7 +346,7 @@ https://pgadmin.alejandrohernandez.arkania.es
 
     💡 Incluya en el informe el enlace al código fuente de la aplicación.
 
-#### Entorno de producción
+#### Entorno de producción <a name="id5"></a>
 
 1. Clone el repositorio en la máquina de producción.
 
@@ -361,13 +361,78 @@ git clone git@github.com:alherdom/travelroad_laravel.git
 
 2. Incluya el fichero config.php con las credenciales de acceso a la base de datos de producción.
 
+```
+~/travelroad_laravel$ nano .env
+```
+
+```
+...
+APP_NAME=TravelRoad
+APP_ENV=development
+...
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=travelroad
+DB_USERNAME=travelroad_user
+DB_PASSWORD=dpl0000
+...
+```
+
 3. Configure un virtual host en producción para servir la aplicación Laravel en el dominio laravel.travelroad.nombrealumno.es.
 
+```
+cd /etc/nginx/conf.d
+```
 
+```
+sudo nano travelroad_laravel.conf
+```
+
+```
+server {
+    server_name laravel.alejandrohernandez.arkania.es;
+    root /home/alejandrohernandez/travelroad_laravel/travelroad/public;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/alejandrohernandez.arkania.es/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/alejandrohernandez.arkania.es/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = laravel.alejandrohernandez.arkania.es) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name laravel.alejandrohernandez.arkania.es;
+    listen 80;
+    return 404; # managed by Certbot
+}
+```
 
 4. Incluya certificado de seguridad y redirección www.
 
     💡 Incluya en el informe la URL donde está desplegada la aplicación.
+
+```
+https://laravel.alejandrohernandez.arkania.es/
+```
 
 - Instalamos el cliente de **certbot**:
 
@@ -454,7 +519,7 @@ If you like Certbot, please consider supporting our work by:
 https://laravel.alejandrohernandez.arkania.es/
 ```
 
-#### Despliegue
+#### Despliegue <a name="id6"></a>
 
 1. Cree un shell-script deploy.sh (con permisos de ejecución) en la carpeta de trabajo del repositorio, que se conecte por ssh a la máquina de producción y ejecute un git pull para actualizar los cambios.
 
